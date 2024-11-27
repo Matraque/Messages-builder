@@ -68,15 +68,9 @@ def send_to_model():
         "tools": json.loads(st.session_state.tools_json) if st.session_state.tools_json else []
     }
     response = requests.post(url, headers=headers, data=json.dumps(data))
-    if response.status_code == 200:
-        response_data = response.json()
-        if 'choices' in response_data:
-            return response_data["choices"][0]["message"]
-        else:
-            st.error(f"Expected data format not found in response: {response_data}")
-    else:
-        st.error(f"Failed to get valid response. Status Code: {response.status_code}, Response: {response.text}")
-    return "Error or different response format"
+    response_data = response.json()
+    if 'choices' in response_data:
+        return response_data["choices"][0]["message"]
 
 # App layout
 st.title('Messages builder for OpenAI API')
@@ -214,8 +208,10 @@ for index, message in enumerate(st.session_state.messages):
             st.session_state.messages.pop(index)
 
 # Tools list input
-file = open("tools.json", "r")
-default_json = json.dumps(json.load(file), indent=4)
+# Tools list input
+with open("tools.json", "r", encoding="utf-8") as file:
+    default_json = json.dumps(json.load(file), indent=4, ensure_ascii=False)
+
 tools_json_input = st.text_area("Tool List", value=default_json, height=150, key='tools_json')
 
 # Send to model button
