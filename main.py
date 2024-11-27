@@ -208,7 +208,6 @@ for index, message in enumerate(st.session_state.messages):
             st.session_state.messages.pop(index)
 
 # Tools list input
-# Tools list input
 with open("tools.json", "r", encoding="utf-8") as file:
     default_json = json.dumps(json.load(file), indent=4, ensure_ascii=False)
 
