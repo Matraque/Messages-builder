@@ -71,7 +71,7 @@ def send_to_model():
     if response.status_code == 200:
         response_data = response.json()
         if 'choices' in response_data:
-            return response_data["choices"][0]["message"]["content"]
+            return response_data["choices"][0]["message"]
         else:
             st.error(f"Expected data format not found in response: {response_data}")
     else:
@@ -213,8 +213,10 @@ for index, message in enumerate(st.session_state.messages):
         if st.button("Delete", key=f'delete_{index}'):
             st.session_state.messages.pop(index)
 
-# Tools JSON input
-st.text_area("Paste Tool List JSON here", key='tools_json', height=150)
+# Tools list input
+file = open("tools.json", "r")
+default_json = json.dumps(json.load(file), indent=4)
+tools_json_input = st.text_area("Tool List", value=default_json, height=150, key='tools_json')
 
 # Send to model button
 if st.button('Send to Model'):
