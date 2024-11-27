@@ -48,7 +48,7 @@ if 'content' not in st.session_state:
 def send_to_model():
     url = 'https://openai-dev-fra-001.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-10-21'
     headers = {
-        'api-key': '28dd324b1b444e88aa6f3f1d9d310d6d',
+        'api-key': st.secrets["key"],
         'Content-Type': 'application/json'
     }
     # Prepare messages with correct tool_calls and tool_call_id
