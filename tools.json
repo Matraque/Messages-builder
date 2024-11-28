@@ -10,21 +10,6 @@
     {
       "type": "function",
       "function": {
-        "name": "get_sum",
-        "description": "Get the sum of two numbers",
-        "parameters": {
-          "type": "object",
-          "properties": {
-            "a": { "type": "number", "description": "The first number to sum" },
-            "b": { "type": "number", "description": "The second number" }
-          },
-          "required": ["a", "b"]
-        }
-      }
-    },
-    {
-      "type": "function",
-      "function": {
         "name": "Users_GetAll",
         "description": "Informations sur les utilisateurs (id, type, etc.)",
         "parameters": { "type": "object", "properties": {} }

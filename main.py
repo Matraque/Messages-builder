@@ -101,7 +101,6 @@ else:
 
 # Form to capture the current state of fields
 with st.form("message_form"):
-    # No need for hidden/disabled fields
     # Just a submit button
     submitted = st.form_submit_button("Add Message")
     if submitted:
