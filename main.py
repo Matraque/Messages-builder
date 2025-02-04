@@ -70,7 +70,11 @@ def send_to_model():
     response = requests.post(url, headers=headers, data=json.dumps(data))
     response_data = response.json()
     if 'choices' in response_data:
-        return response_data["choices"][0]["message"]
+        message = response_data["choices"][0]["message"]
+        if 'tool_calls' in message:
+            st.write("### Tool Calls")
+            st.write(message["tool_calls"])
+        return message
 
 # App layout
 st.title('Messages builder for OpenAI API')
