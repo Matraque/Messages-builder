@@ -46,7 +46,7 @@ if 'content' not in st.session_state:
 
 # Function to send data to the model
 def send_to_model():
-    url = 'https://openai-dev-fra-001.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-10-21'
+    url = 'https://openai-dev-fra-001.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-06-01'
     headers = {
         'api-key': st.secrets["key"],
         'Content-Type': 'application/json'
