@@ -207,7 +207,7 @@ for index, message in enumerate(st.session_state.messages):
             st.session_state.messages.pop(index)
 
 # Tools list input
-with open("tools.json", "r", encoding="utf-8") as file:
+with open("tools_get.json", "r", encoding="utf-8") as file:
     default_json = json.dumps(json.load(file), indent=4, ensure_ascii=False)
 
 tools_json_input = st.text_area("Tool List", value=default_json, height=150, key='tools_json')
