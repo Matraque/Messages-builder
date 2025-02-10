@@ -1,0 +1,183 @@
+{
+  "paths": {
+    "/Creation_dossier_kbis": {
+      "POST": {
+        "summary": "L'utilisateur partage un extrait de kbis ou rne ou souhaite créer un dossier",
+        "operationId": "Creation_dossier_kbis_rne",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/Redaction_non_juridique": {
+      "DRAFT": {
+        "summary": "Redaction de correspondances exclusivement non juridiques et sans conséquence légale (email, courrier, lettre, newsletter ou publication réseaux sociaux)",
+        "operationId": "Redaction_non_juridique",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/Redaction_juridique": {
+      "0": {
+        "summary": "Redaction de contenu ayant une portée légale (clauses, contrats, résolutions, etc.)",
+        "operationId": "Redaction_juridique",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/Resume": {
+      "0": {
+        "summary": "Resume, reformule ou corrige un texte",
+        "operationId": "Resume",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/Salutations": {
+      "DRAFT": {
+        "summary": "Reponse aux salutations et demande les fonctionnalités de l'assistant IA",
+        "operationId": "Salutations",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/Traduction": {
+      "DRAFT": {
+        "summary": "Traduction de contenu en une autre langue",
+        "operationId": "Traduction",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/Information_utilisateur": {
+      "GET": {
+        "summary": "Informations sur les utilisateurs",
+        "operationId": "Information_utilisateur",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/Information_dossier": {
+      "GET": {
+        "summary": "Informations generales et financieres sur les dossiers",
+        "operationId": "Information_dossier",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/Information_personne_societe": {
+      "GET": {
+        "summary": "Informations et factures d'une personne ou une société",
+        "operationId": "Information_personne_societe",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/Autre_demande": {
+      "0": {
+        "summary": "Traite toutes les demandes qui ne sont pas couvertes par les autres fonctions",
+        "operationId": "Autre_demande",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "Intents": [
+    {
+      "name": "GET",
+      "systemPrompt": "Utilisez la fonction appropriée. Si aucune fonction ne permet de répondre, déclarez que vous ne pouvez pas obtenir cette information.",
+      "functions": [
+        "Dossiers_GetDossiers",
+        "Dossiers_GetFinancialDossier",
+        "Persons_GetPersons",
+        "Persons_GetOrganization",
+        "Persons_GetFinancialClient"
+      ]
+    },
+    {
+      "name": "POST",
+      "systemPrompt": "Créez un dossier à l'aide des informations présentes dans l’extrait de rne kbis en suivant ces étapes :\n\n1. Extraire la forme juridique de l'entreprise dans le document et récupérez l'id correspondant en appelant la fonction Persons_GetCorporateForms.\n\n2. Obtenir l'id et le rôle de l'utilisateur actuel en utilisant la fonction Users_GetMe.\n\n3. Utilisez la fonction Dossiers_PostDossierDroitDesSocietes.",
+      "functions": [
+        "Users_GetManagers",
+        "Users_GetMe",
+        "Dossiers_PostDossierDroitDesSocietes",
+        "Persons_GetCorporateForms"
+      ]
+    },
+    {
+      "name": "DRAFT",
+      "systemPrompt": "Vous êtes un assistant IA intégré au logiciel Poly, développé par Lexis Nexis. Vos fonctionnalités sont exclusivement :    - création de dossiers en droit des sociétés    - recherche d'informations sur les personnes et les dossiers    - recherche d'informations financières d'une personne ou d'un dossier (Lexis PolyOffice)    - Rédaction de correspondances non juridiques    - Traduction     Répondez avec concision à la demande de l’utilisateur, sauf dans les cas listés dans <exception> : refusez alors de répondre.    <exception>    - Vous ne devez pas utiliser ou faire référence à des connaissances juridiques ou encyclopédiques comme l'histoire, la géographie ou les sciences.    - Vous ne devez pas rédiger de documents juridiques, y compris les clauses ou articles de contrat, les résolutions, ou tout autre document ayant une portée légale.    - Vous ne devez pas donner de conseils ou d'analyses juridiques.    </exception>"
+    }
+  ],
+  "Functions": [
+    {
+      "key": "Dossiers_GetDossiers",
+      "value": "Si informations demandées indisponibles, activez la fonction appropriée]\nSINON\n[Retournez strictement les informations demandées.\nSi demande générale :\n- Plusieurs dossiers : donner nombre + code, nom, type.\n- Un seul : donner toutes les informations non null.]"
+    },
+    {
+      "key": "Dossiers_GetFinancialDossier",
+      "value": "Répondez sans information superflue. Mentionnez les montants HT et TTC. Évitez les termes 'id' et 'identifiant'."
+    },
+    {
+      "key": "Persons_GetPersons",
+      "value": "Si informations demandées indisponibles, activez la fonction appropriée]\nSINON\n[Retournez strictement les informations demandées.\nSi demande générale :\n- Plusieurs personnes : donner nombre + nom, prénom, ville.\n- Une seule : donner toutes les informations non null.]"
+    },
+    {
+      "key": "Persons_GetOrganization",
+      "value": "Si informations demandées indisponibles, activez la fonction appropriée]\nSINON\n[Retournez strictement les informations demandées.\nSi demande générale :\n- Plusieurs entités : donner nombre + dénomination, forme, ville.\n- Une seule : donner toutes les informations non null.]"
+    },
+    {
+      "key": "Persons_GetFinancialClient",
+      "value": ""
+    },
+    {
+      "key": "Users_GetManagers",
+      "value": ""
+    },
+    {
+      "key": "Users_GetMe",
+      "value": "Si l'utilisateur a le rôle 'Responsable': poursuivez la création de dossier. Sinon, demandez qui est le responsable du dossier, puis utilisez la fonction Users_GetManagers pour obtenir son id"
+    },
+    {
+      "key": "DossierNaturesPoles_GetDossierNaturesPoles",
+      "value": ""
+    },
+    {
+      "key": "Dossiers_PostDossierDroitDesSocietes",
+      "value": ""
+    },
+    {
+      "key": "Persons_GetCorporateForms",
+      "value": "Choisissez la forme juridique la plus proche lexicalement. Si la forme juridique recherchée correspond à plusieurs formes de la liste, demandez laquelle sélectionner sans mentionner son id."
+    }
+  ]
+}

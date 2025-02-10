@@ -51,62 +51,26 @@ def send_to_model():
         'api-key': st.secrets["key"],
         'Content-Type': 'application/json'
     }
-    
-    # Prepare messages (including any tool_calls or tool_call_id if available)
+    # Prepare messages with correct tool_calls and tool_call_id
     messages = []
     for message in st.session_state.messages:
         msg = {"role": message['role']}
-        if message.get('content') is not None:
-            msg["content"] = message["content"]
+        if 'content' in message and message['content'] is not None:
+            msg["content"] = message['content']
         if 'tool_calls' in message:
-            msg["tool_calls"] = message["tool_calls"]
+            msg["tool_calls"] = message['tool_calls']
         if 'tool_call_id' in message:
-            msg["tool_call_id"] = message["tool_call_id"]
+            msg["tool_call_id"] = message['tool_call_id']
         messages.append(msg)
-    
-    # Prepare tools list from session state if provided (it should be a JSON string)
-    tools = json.loads(st.session_state.tools_json) if st.session_state.tools_json else []
-    
-    # Build the request payload
     data = {
         "model": "gpt-4o",
         "messages": messages,
-        "tools": tools
+        "tools": json.loads(st.session_state.tools_json) if st.session_state.tools_json else []
     }
-    
-    # Send the POST request
     response = requests.post(url, headers=headers, data=json.dumps(data))
-    
-    # Attempt to decode the JSON response
-    try:
-        response_data = response.json()
-    except Exception as e:
-        st.error("Error decoding JSON response: " + str(e))
-        st.write("Raw response:", response.text)
-        return None
-    
-    # Debug: Print the full API response so you can inspect it
-    st.write("### Full API Response")
-    st.json(response_data)
-    
-    # Process the response if 'choices' exists
-    if 'choices' in response_data and response_data["choices"]:
-        message = response_data["choices"][0].get("message", {})
-        
-        # In the function-calling case, the model returns a JSON with a tool call
-        if "tool_calls" in message:
-            st.write("### Function Call Instructions")
-            st.json(message["tool_calls"])
-        elif "content" in message:
-            st.write("### Response Content")
-            st.write(message["content"])
-        else:
-            st.write("The response did not include content or tool_calls.")
-        
-        return message
-    else:
-        st.error("No 'choices' found in the response.")
-        return None
+    response_data = response.json()
+    if 'choices' in response_data:
+        return response_data["choices"][0]["message"]
 
 # App layout
 st.title('Messages builder for OpenAI API')
