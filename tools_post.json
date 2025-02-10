@@ -1,336 +1,334 @@
-{
-  "tools": [
-    {
-      "type": "function",
-      "function": {
-        "name": "Users_GetManagers",
-        "description": "Liste des utilisateurs responsables",
-        "parameters": { "type": "object", "properties": {} }
-      }
-    },
-    {
-      "type": "function",
-      "function": {
-        "name": "Users_GetMe",
-        "description": "Informations sur l'utilisateur actuel (id, role, etc.)",
-        "parameters": { "type": "object", "properties": {} }
-      }
-    },
-    {
-      "type": "function",
-      "function": {
-        "name": "Dossiers_PostDossierDroitDesSocietes",
-        "description": "Création de dossier de type \"Droit des sociétés\"",
-        "parameters": {
-          "type": "object",
-          "properties": {
-            "dossier": {
-              "type": "object",
-              "properties": {
-                "Id utilisateur Responsable": {
-                  "type": "string",
-                  "description": "id et role récupérables via Users_GetMe pour l'utilisateur actuel ou Users_GetManagers pour tout autre utilisateur. L'id doit avoir le rôle \"responsable\"",
-                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
-                  "minLength": 1,
-                  "format": "guid"
-                },
-                "denomination": {
-                  "type": "string",
-                  "description": "Denomination ou Raison Sociale de la société",
-                  "minLength": 1
-                },
-                "Id forme juridique": {
-                  "type": "string",
-                  "description": "Id de la forme juridique de la société; récupérable via Persons_GetCorporateForms",
-                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
-                  "minLength": 1,
-                  "format": "guid"
-                },
-                "numero SIREN": {
-                  "type": "string",
-                  "description": "Numero SIREN",
-                  "minLength": 1
-                },
-                "numero SIRET": {
-                  "type": ["string", "null"],
-                  "description": "Numero SIRET"
-                },
-                "ville RCS": {
-                  "type": ["string", "null"],
-                  "description": "Ville du registre du commerce et des sociétés (RCS)"
-                },
-                "sigle": { "type": ["string", "null"], "description": "Sigle" },
-                "activite principale": {
-                  "type": ["string", "null"],
-                  "description": "Activité principale de la personne morale ou de l'établissement principal"
-                },
-                "code postal du siege social": {
-                  "type": ["string", "null"],
-                  "description": "Code postal de l'adresse du siège"
-                },
-                "complement adresse du siege social": {
-                  "type": ["string", "null"],
-                  "description": "Complément d'adresse du siège social"
-                },
-                "rue du siege social": {
-                  "type": ["string", "null"],
-                  "description": "Rue pour l'adresse du siège"
-                },
-                "ville du siege social": {
-                  "type": ["string", "null"],
-                  "description": "Ville pour l'adresse du siège"
-                },
-                "pays du siege social": {
-                  "type": ["string", "null"],
-                  "description": "Pays pour l'adresse du siège"
-                },
-                "devise du capital social": {
-                  "type": ["string", "null"],
-                  "description": "Capital Devise"
-                },
-                "montant du capital social": {
-                  "type": ["number", "null"],
-                  "description": "Capital Montant",
-                  "format": "decimal"
-                },
-                "Date de cloture de l exercice": {
-                  "type": ["string", "null"],
-                  "description": "Date de clôture au format DD/MM"
-                },
-                "code_naf ou APE": {
-                  "type": ["string", "null"],
-                  "description": "Nomenclature d'activité française (Code NAF) ou Code APE\n "
-                },
-                "Date de fin d activite": {
-                  "type": ["string", "null"],
-                  "description": "Date de fin d'activité"
-                },
-                "Date d immatriculation": {
-                  "type": ["string", "null"],
-                  "description": "Date d'immatriculation"
-                },
-                "Date de debut d activite": {
-                  "type": ["string", "null"],
-                  "description": "Début d'activité"
-                },
-                "duree ou date d expiration": {
-                  "type": ["string", "null"],
-                  "description": "Durée de la personne morale ou date d'expiration"
-                },
-                "Objet social": {
-                  "type": ["string", "null"],
-                  "description": "Objet social"
-                },
-                "origine du fond ou de l activite": {
-                  "type": ["string", "null"],
-                  "description": "Origine du fond ou de l'activité"
-                },
-                "numero de gestion": {
-                  "type": ["string", "null"],
-                  "description": "Numéro de gestion"
-                },
-                "dirigeants": {
-                  "type": ["array", "null"],
-                  "description": "Liste des dirigeants de la société; indiquée dans le kbis",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "function_types": {
-                        "type": "array",
-                        "description": "Liste des types de fonction récupéré à partir du libellé des fonctions du dirigeant",
-                        "items": {
-                          "type": "string",
-                          "description": "Types of functions:\\n- `PRESIDENT`: Représente tout type de président (conseil d'administration, directoire, etc)\\n- `VICEPRESIDENT`: Représente un vice-président\\n- `ADMINISTRATEUR`: Représente les administrateurs\\n- `DIRECTEURGENERAL`: Représente un directeur général\\n- `DIRECTEURGENERALDELEGUE`: Représente un directeur général délégué\\n- `GERANT`: Représente un gérant",
-                          "enum": [
-                            "PRESIDENT",
-                            "VICEPRESIDENT",
-                            "ADMINISTRATEUR",
-                            "DIRECTEURGENERAL",
-                            "DIRECTEURGENERALDELEGUE",
-                            "GERANT"
-                          ]
-                        }
-                      },
-                      "denomination": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Dénomination"
-                      },
-                      "forme juridique": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Forme juridique"
-                      },
-                      "SIREN": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Infos d'immatriculation RCS > Siren"
-                      },
-                      "SIRET": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Infos d'immatriculation RCS > Siret"
-                      },
-                      "ville RCS": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Infos d'immatriculation RCS > Ville"
-                      },
-                      "code postal du siege social": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Adresse postale > Code postal"
-                      },
-                      "complement adresse du siege social": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Adresse postale > Complement"
-                      },
-                      "rue du siege social": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Adresse postale > Rue"
-                      },
-                      "ville du siege social": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Adresse postale > Ville"
-                      },
-                      "pays du siege social": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Adresse postale > Pays"
-                      },
-                      "nom du representant legal": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Nom"
-                      },
-                      "nom usage du representant legal": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Nom d'usage"
-                      },
-                      "prenoms du representant legal": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Prénoms"
-                      },
-                      "civilite du representant legal": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Civilité : Monsieur ou Madame"
-                      },
-                      "date de naissance du representant legal": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Date de naissance"
-                      },
-                      "indicatif du departement de naissance du representant legal": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Indicarif du département de naissance"
-                      },
-                      "ville de naissance du representant legal": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Ville de naissance"
-                      },
-                      "pays de naissance du representant legal": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Pays de naissance"
-                      },
-                      "nationalite du representant legal": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Nationalité"
-                      },
-                      "code postal du domicile du representant legal": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Adresse postale du domicile personnel > Code postal"
-                      },
-                      "complement adresse du domicile du representant legal": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Adresse postale du domicile personnel > Complement"
-                      },
-                      "rue du domicile du representant legal": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Adresse postale du domicile personnel > Rue"
-                      },
-                      "ville du domicile du representant legal": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Adresse postale du domicile personnel > Ville"
-                      },
-                      "pays du domicile du representant legal": {
-                        "type": ["string", "null"],
-                        "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Adresse postale du domicile personnel > Pays"
-                      },
-                      "nom": {
-                        "type": ["string", "null"],
-                        "description": "Personne physique > Nom"
-                      },
-                      "nom usage": {
-                        "type": ["string", "null"],
-                        "description": "Personne physique > Nom d'usage"
-                      },
-                      "prenoms": {
-                        "type": ["string", "null"],
-                        "description": "Personne physique > Prénoms"
-                      },
-                      "civilite": {
-                        "type": ["string", "null"],
-                        "description": "Personne physique > Civilité"
-                      },
-                      "date de naissance": {
-                        "type": ["string", "null"],
-                        "description": "Personne physique > Date de naissance"
-                      },
-                      "ville de naissance": {
-                        "type": ["string", "null"],
-                        "description": "Personne physique > Ville de naissance"
-                      },
-                      "indicatif du departement de naissance": {
-                        "type": ["string", "null"],
-                        "description": "Personne physique > Indicatif du département de naissance"
-                      },
-                      "pays de naissance": {
-                        "type": ["string", "null"],
-                        "description": "Personne physique > Pays de naissance"
-                      },
-                      "nationalite": {
-                        "type": ["string", "null"],
-                        "description": "Personne physique > Nationalité"
-                      },
-                      "code postal du domicile": {
-                        "type": ["string", "null"],
-                        "description": "Personne physique > Adresse postale du domicile personnel > Code postal"
-                      },
-                      "complement d adresse du domicile": {
-                        "type": ["string", "null"],
-                        "description": "Personne physique > Adresse postale du domicile personnel > Complement"
-                      },
-                      "rue du domicile": {
-                        "type": ["string", "null"],
-                        "description": "Personne physique > Adresse postale du domicile personnel > Rue"
-                      },
-                      "ville du domicile": {
-                        "type": ["string", "null"],
-                        "description": "Personne physique > Adresse postale du domicile personnel > Ville"
-                      },
-                      "pays du domicile": {
-                        "type": ["string", "null"],
-                        "description": "Personne physique > Adresse postale du domicile personnel > Pays"
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "Users_GetManagers",
+      "description": "Liste des utilisateurs responsables",
+      "parameters": { "type": "object", "properties": {} }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "Users_GetMe",
+      "description": "Informations sur l'utilisateur actuel (id, role, etc.)",
+      "parameters": { "type": "object", "properties": {} }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "Dossiers_PostDossierDroitDesSocietes",
+      "description": "Création de dossier de type \"Droit des sociétés\"",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "dossier": {
+            "type": "object",
+            "properties": {
+              "Id utilisateur Responsable": {
+                "type": "string",
+                "description": "id et role récupérables via Users_GetMe pour l'utilisateur actuel ou Users_GetManagers pour tout autre utilisateur. L'id doit avoir le rôle \"responsable\"",
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+                "minLength": 1,
+                "format": "guid"
+              },
+              "denomination": {
+                "type": "string",
+                "description": "Denomination ou Raison Sociale de la société",
+                "minLength": 1
+              },
+              "Id forme juridique": {
+                "type": "string",
+                "description": "Id de la forme juridique de la société; récupérable via Persons_GetCorporateForms",
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+                "minLength": 1,
+                "format": "guid"
+              },
+              "numero SIREN": {
+                "type": "string",
+                "description": "Numero SIREN",
+                "minLength": 1
+              },
+              "numero SIRET": {
+                "type": ["string", "null"],
+                "description": "Numero SIRET"
+              },
+              "ville RCS": {
+                "type": ["string", "null"],
+                "description": "Ville du registre du commerce et des sociétés (RCS)"
+              },
+              "sigle": { "type": ["string", "null"], "description": "Sigle" },
+              "activite principale": {
+                "type": ["string", "null"],
+                "description": "Activité principale de la personne morale ou de l'établissement principal"
+              },
+              "code postal du siege social": {
+                "type": ["string", "null"],
+                "description": "Code postal de l'adresse du siège"
+              },
+              "complement adresse du siege social": {
+                "type": ["string", "null"],
+                "description": "Complément d'adresse du siège social"
+              },
+              "rue du siege social": {
+                "type": ["string", "null"],
+                "description": "Rue pour l'adresse du siège"
+              },
+              "ville du siege social": {
+                "type": ["string", "null"],
+                "description": "Ville pour l'adresse du siège"
+              },
+              "pays du siege social": {
+                "type": ["string", "null"],
+                "description": "Pays pour l'adresse du siège"
+              },
+              "devise du capital social": {
+                "type": ["string", "null"],
+                "description": "Capital Devise"
+              },
+              "montant du capital social": {
+                "type": ["number", "null"],
+                "description": "Capital Montant",
+                "format": "decimal"
+              },
+              "Date de cloture de l exercice": {
+                "type": ["string", "null"],
+                "description": "Date de clôture au format DD/MM"
+              },
+              "code_naf ou APE": {
+                "type": ["string", "null"],
+                "description": "Nomenclature d'activité française (Code NAF) ou Code APE\n "
+              },
+              "Date de fin d activite": {
+                "type": ["string", "null"],
+                "description": "Date de fin d'activité"
+              },
+              "Date d immatriculation": {
+                "type": ["string", "null"],
+                "description": "Date d'immatriculation"
+              },
+              "Date de debut d activite": {
+                "type": ["string", "null"],
+                "description": "Début d'activité"
+              },
+              "duree ou date d expiration": {
+                "type": ["string", "null"],
+                "description": "Durée de la personne morale ou date d'expiration"
+              },
+              "Objet social": {
+                "type": ["string", "null"],
+                "description": "Objet social"
+              },
+              "origine du fond ou de l activite": {
+                "type": ["string", "null"],
+                "description": "Origine du fond ou de l'activité"
+              },
+              "numero de gestion": {
+                "type": ["string", "null"],
+                "description": "Numéro de gestion"
+              },
+              "dirigeants": {
+                "type": ["array", "null"],
+                "description": "Liste des dirigeants de la société; indiquée dans le kbis",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "function_types": {
+                      "type": "array",
+                      "description": "Liste des types de fonction récupéré à partir du libellé des fonctions du dirigeant",
+                      "items": {
+                        "type": "string",
+                        "description": "Types of functions:\\n- `PRESIDENT`: Représente tout type de président (conseil d'administration, directoire, etc)\\n- `VICEPRESIDENT`: Représente un vice-président\\n- `ADMINISTRATEUR`: Représente les administrateurs\\n- `DIRECTEURGENERAL`: Représente un directeur général\\n- `DIRECTEURGENERALDELEGUE`: Représente un directeur général délégué\\n- `GERANT`: Représente un gérant",
+                        "enum": [
+                          "PRESIDENT",
+                          "VICEPRESIDENT",
+                          "ADMINISTRATEUR",
+                          "DIRECTEURGENERAL",
+                          "DIRECTEURGENERALDELEGUE",
+                          "GERANT"
+                        ]
                       }
                     },
-                    "required": [],
-                    "additionalProperties": false,
-                    "description": "Représentation à plat d'un dirigeant"
-                  }
+                    "denomination": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Dénomination"
+                    },
+                    "forme juridique": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Forme juridique"
+                    },
+                    "SIREN": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Infos d'immatriculation RCS > Siren"
+                    },
+                    "SIRET": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Infos d'immatriculation RCS > Siret"
+                    },
+                    "ville RCS": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Infos d'immatriculation RCS > Ville"
+                    },
+                    "code postal du siege social": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Adresse postale > Code postal"
+                    },
+                    "complement adresse du siege social": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Adresse postale > Complement"
+                    },
+                    "rue du siege social": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Adresse postale > Rue"
+                    },
+                    "ville du siege social": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Adresse postale > Ville"
+                    },
+                    "pays du siege social": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Adresse postale > Pays"
+                    },
+                    "nom du representant legal": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Nom"
+                    },
+                    "nom usage du representant legal": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Nom d'usage"
+                    },
+                    "prenoms du representant legal": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Prénoms"
+                    },
+                    "civilite du representant legal": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Civilité : Monsieur ou Madame"
+                    },
+                    "date de naissance du representant legal": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Date de naissance"
+                    },
+                    "indicatif du departement de naissance du representant legal": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Indicarif du département de naissance"
+                    },
+                    "ville de naissance du representant legal": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Ville de naissance"
+                    },
+                    "pays de naissance du representant legal": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Pays de naissance"
+                    },
+                    "nationalite du representant legal": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Nationalité"
+                    },
+                    "code postal du domicile du representant legal": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Adresse postale du domicile personnel > Code postal"
+                    },
+                    "complement adresse du domicile du representant legal": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Adresse postale du domicile personnel > Complement"
+                    },
+                    "rue du domicile du representant legal": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Adresse postale du domicile personnel > Rue"
+                    },
+                    "ville du domicile du representant legal": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Adresse postale du domicile personnel > Ville"
+                    },
+                    "pays du domicile du representant legal": {
+                      "type": ["string", "null"],
+                      "description": "Personne morale > Representant légal ou personne ayant le pouvoir de diriger, gérer ou engager à titre habituel > Adresse postale du domicile personnel > Pays"
+                    },
+                    "nom": {
+                      "type": ["string", "null"],
+                      "description": "Personne physique > Nom"
+                    },
+                    "nom usage": {
+                      "type": ["string", "null"],
+                      "description": "Personne physique > Nom d'usage"
+                    },
+                    "prenoms": {
+                      "type": ["string", "null"],
+                      "description": "Personne physique > Prénoms"
+                    },
+                    "civilite": {
+                      "type": ["string", "null"],
+                      "description": "Personne physique > Civilité"
+                    },
+                    "date de naissance": {
+                      "type": ["string", "null"],
+                      "description": "Personne physique > Date de naissance"
+                    },
+                    "ville de naissance": {
+                      "type": ["string", "null"],
+                      "description": "Personne physique > Ville de naissance"
+                    },
+                    "indicatif du departement de naissance": {
+                      "type": ["string", "null"],
+                      "description": "Personne physique > Indicatif du département de naissance"
+                    },
+                    "pays de naissance": {
+                      "type": ["string", "null"],
+                      "description": "Personne physique > Pays de naissance"
+                    },
+                    "nationalite": {
+                      "type": ["string", "null"],
+                      "description": "Personne physique > Nationalité"
+                    },
+                    "code postal du domicile": {
+                      "type": ["string", "null"],
+                      "description": "Personne physique > Adresse postale du domicile personnel > Code postal"
+                    },
+                    "complement d adresse du domicile": {
+                      "type": ["string", "null"],
+                      "description": "Personne physique > Adresse postale du domicile personnel > Complement"
+                    },
+                    "rue du domicile": {
+                      "type": ["string", "null"],
+                      "description": "Personne physique > Adresse postale du domicile personnel > Rue"
+                    },
+                    "ville du domicile": {
+                      "type": ["string", "null"],
+                      "description": "Personne physique > Adresse postale du domicile personnel > Ville"
+                    },
+                    "pays du domicile": {
+                      "type": ["string", "null"],
+                      "description": "Personne physique > Adresse postale du domicile personnel > Pays"
+                    }
+                  },
+                  "required": [],
+                  "additionalProperties": false,
+                  "description": "Représentation à plat d'un dirigeant"
                 }
-              },
-              "required": [
-                "Id utilisateur Responsable",
-                "denomination",
-                "Id forme juridique",
-                "numero SIREN"
-              ],
-              "additionalProperties": false,
-              "description": "Modèle de données utilisées pour créer un dossier de type \"Droit des sociétés\""
-            }
-          },
-          "required": ["dossier"]
-        }
-      }
-    },
-    {
-      "type": "function",
-      "function": {
-        "name": "Persons_GetCorporateForms",
-        "description": "Id des formes juridiques des personnes morales",
-        "parameters": { "type": "object", "properties": {} }
+              }
+            },
+            "required": [
+              "Id utilisateur Responsable",
+              "denomination",
+              "Id forme juridique",
+              "numero SIREN"
+            ],
+            "additionalProperties": false,
+            "description": "Modèle de données utilisées pour créer un dossier de type \"Droit des sociétés\""
+          }
+        },
+        "required": ["dossier"]
       }
     }
-  ]
-}
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "Persons_GetCorporateForms",
+      "description": "Id des formes juridiques des personnes morales",
+      "parameters": { "type": "object", "properties": {} }
+    }
+  }
+]

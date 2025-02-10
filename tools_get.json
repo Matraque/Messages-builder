@@ -1,96 +1,94 @@
-{
-  "tools": [
-    {
-      "type": "function",
-      "function": {
-        "name": "Dossiers_GetDossiers",
-        "description": "id et Informations générales (non-financières) sur les dossiers (nom, URL, type, libellé, collaborateur)",
-        "parameters": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Nom ou code du dossier",
-              "minLength": 3
-            }
-          },
-          "required": ["name"]
-        }
-      }
-    },
-    {
-      "type": "function",
-      "function": {
-        "name": "Dossiers_GetFinancialDossier",
-        "description": "Informations financières sur un dossier (facture, frais, règlement, solde, honoraires, remise, memo, URL, etc.)",
-        "parameters": {
-          "type": "object",
-          "properties": {
-            "idDossier": {
-              "type": "string",
-              "description": "Récupérable via Dossiers_GetDossiers",
-              "pattern": "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}",
-              "format": "guid"
-            }
-          },
-          "required": ["idDossier"]
-        }
-      }
-    },
-    {
-      "type": "function",
-      "function": {
-        "name": "Persons_GetPersons",
-        "description": "id et fiche d'informations sur une personne physique (identité, adresse, contact, etc.)",
-        "parameters": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Nom + [Seulement si spécifié : prénom, civilité]",
-              "minLength": 3
-            }
-          },
-          "required": ["name"]
-        }
-      }
-    },
-    {
-      "type": "function",
-      "function": {
-        "name": "Persons_GetOrganization",
-        "description": "id et fiche d'informations sur une personne morale (société, adresse, contact, etc.)",
-        "parameters": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Dénomination + [Seulement si spécifié : forme juridique]",
-              "minLength": 3
-            }
-          },
-          "required": ["name"]
-        }
-      }
-    },
-    {
-      "type": "function",
-      "function": {
-        "name": "Persons_GetFinancialClient",
-        "description": "Informations financières sur une personne physique ou morale (TVA, solde, factures, identifiants, comptabilité)",
-        "parameters": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string",
-              "description": "Récupérable via Persons_GetPersons",
-              "pattern": "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}",
-              "format": "guid"
-            }
-          },
-          "required": ["id"]
-        }
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "Dossiers_GetDossiers",
+      "description": "id et Informations générales (non-financières) sur les dossiers (nom, URL, type, libellé, collaborateur)",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nom ou code du dossier",
+            "minLength": 3
+          }
+        },
+        "required": ["name"]
       }
     }
-  ]
-}
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "Dossiers_GetFinancialDossier",
+      "description": "Informations financières sur un dossier (facture, frais, règlement, solde, honoraires, remise, memo, URL, etc.)",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "idDossier": {
+            "type": "string",
+            "description": "Récupérable via Dossiers_GetDossiers",
+            "pattern": "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}",
+            "format": "guid"
+          }
+        },
+        "required": ["idDossier"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "Persons_GetPersons",
+      "description": "id et fiche d'informations sur une personne physique (identité, adresse, contact, etc.)",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nom + [Seulement si spécifié : prénom, civilité]",
+            "minLength": 3
+          }
+        },
+        "required": ["name"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "Persons_GetOrganization",
+      "description": "id et fiche d'informations sur une personne morale (société, adresse, contact, etc.)",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Dénomination + [Seulement si spécifié : forme juridique]",
+            "minLength": 3
+          }
+        },
+        "required": ["name"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "Persons_GetFinancialClient",
+      "description": "Informations financières sur une personne physique ou morale (TVA, solde, factures, identifiants, comptabilité)",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Récupérable via Persons_GetPersons",
+            "pattern": "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}",
+            "format": "guid"
+          }
+        },
+        "required": ["id"]
+      }
+    }
+  }
+]

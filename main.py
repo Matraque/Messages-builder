@@ -51,7 +51,6 @@ def send_to_model():
         'api-key': st.secrets["key"],
         'Content-Type': 'application/json'
     }
-    # Prepare messages with correct tool_calls and tool_call_id
     messages = []
     for message in st.session_state.messages:
         msg = {"role": message['role']}
@@ -69,8 +68,13 @@ def send_to_model():
     }
     response = requests.post(url, headers=headers, data=json.dumps(data))
     response_data = response.json()
+
+    # Debug: Print the full response to see all the details.
+    # st.write("Full API response:", response_data)
+
     if 'choices' in response_data:
         return response_data["choices"][0]["message"]
+
 
 # App layout
 st.title('Messages builder for OpenAI API')
